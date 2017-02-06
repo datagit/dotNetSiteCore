@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/" xmlns:set="http://www.sitecore.net/xmlconfig/set/">
+  <sitecore>
+    <pipelines>
+      <group groupName="analytics.aggregation">
+        <pipelines>
+          <interactions>
+            <processor type="Sitecore.WFFM.Analytics.Aggregation.FormSummaryProcessor, Sitecore.WFFM.Analytics"> <patch:delete  /></processor>
+            <processor type="Sitecore.WFFM.Analytics.Aggregation.FormEventsProcessor, Sitecore.WFFM.Analytics" > <patch:delete  /></processor>
+          </interactions>
+        </pipelines>
+      </group>
+    </pipelines>
+  </sitecore>
+</configuration>
