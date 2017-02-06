@@ -1,0 +1,74 @@
+1. Sitecore license: 
+	- For a single server with 1-3 authors/editors US$ 20k purchasing Sitecore's PrimaryEdition, US$ 35k (US$20k for Web CMS + US$ 15k for OMS) plus annual support fees. 
+	- More than 3 content managers, purchasing Sitecore's Professional Edition(includes Web CMS and OMS), which starts at US$ 60k for the first server.
+	
+2. Install Sitecore Instance, follow documents, and sitecore version.
+
+3. Config DataFolder from Webconfig:   
+	<sitecore database="SqlServer">
+		<sc.variable name="dataFolder" value="/data" />
+	</sitecore>
+	
+4. Item's Url: position of item in content tree
+
+5. Routing API Url for Ajax Request: 
+	- Define class
+		namespace MyNamespace
+		{
+			public class MyClass
+			{
+			  public virtual void Process(PipelineArgs args)
+			  {
+				RouteTable.Routes.MapRoute("CustomRoute", "some/route/{controller}/{action}/{id}");
+			  }
+			}
+		}
+	- Register Assembly to the initialize pipeline right before the Sitecore InitializeRoutes in Webconfig:
+		<sitecore>
+			<pipelines>
+			  <initialize>
+				<processor type="MyNamespace.MyClass, MyAssembly" />
+			  </initialize>‌
+			</pipelines>
+		</sitecore>
+	- Note:
+		- At bin folder CoffeeShop.DLL => MyAssembly: CoffeeShop
+		- Process method name must be required
+		
+6. Layout not found vs Item not found
+	- Item without Bind layout will cause error Layout not found when browse from Browser
+	- Item that is not exist from content tree will cause error Item not found when browse from Browser
+	
+7. Config startwith path: 
+	<sites>
+	  <site name="website" virtualFolder="/" physicalFolder="/" rootPath="/sitecore/content/coffeeshop/page" startItem="/home" .... />
+	</sites>
+	- Browse Home Url with / or /home instead of "/sitecore/content/coffeeshop/page/Home
+	
+8. Install MongoDB Service:	From Windows command
+	- Create directories for your database and log files:
+		Example:
+		mkdir c:\data\db
+		mkdir c:\data\log
+	- Create a configuration file: For example, create a file at C:\Program Files\MongoDB\Server\3.2\mongod.cfg that specifies both systemLog.path and storage.dbPath with content:
+		systemLog:
+			destination: file
+			path: c:\data\log\mongod.log
+		storage:
+			dbPath: c:\data\db
+	- Install the MongoDB service: execute cmd
+		"C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --config "C:\Program Files\MongoDB\Server\3.2\mongod.cfg" --install
+	- Remove the MongoDB service: "C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --remove
+	- Start/stop service manual: net start/stop MongoDB
+	
+9. Install Sitecore Rock: 
+	- Connect to Sitecore instance
+	- Sync static Content from development Source code to Website root folder
+	
+10. Create a development Project with 2 ways:
+	- Create a Empty Project and copy .csproj to Website root Folder and include necessary Content.
+	- Create a Empty Project and include necessary Content from Website root Folder, after that publishing to Website root Folder.
+	
+11. Glass Mapper: Convert Sitecore Item to C# Object
+	- Install from nuget: Install-Package Glass.Mapper.Sc
+	- Tutorial: http://glass.lu/Mapper/Sc/Tutorials

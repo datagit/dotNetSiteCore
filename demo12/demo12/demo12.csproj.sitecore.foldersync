@@ -1,0 +1,5 @@
+﻿<Project>
+  <FolderSync SynchronizeProjectOutputFolderOnBuild="False">
+    <Folder SourceFolder="C:\Users\dat.dao\Documents\Visual Studio 2015\Projects\demo12\demo12" DestinationFolder="C:\inetpub\wwwroot\demo1\Website" Mode="Mirror" Pattern="*.cshtml, *.css, *.js" />
+  </FolderSync>
+</Project>
